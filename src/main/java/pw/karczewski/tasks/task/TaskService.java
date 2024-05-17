@@ -6,12 +6,12 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
+import com.baeldung.openapi.model.TaskCreate;
+import com.baeldung.openapi.model.TaskRetrieve;
+import com.baeldung.openapi.model.TaskUpdate;
+
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import pw.karczewski.tasks.task.dto.TaskCreate;
-import pw.karczewski.tasks.task.dto.TaskMapper;
-import pw.karczewski.tasks.task.dto.TaskRetrieve;
-import pw.karczewski.tasks.task.dto.TaskUpdate;
 
 @Service
 @RequiredArgsConstructor

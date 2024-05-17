@@ -2,14 +2,22 @@ openapi: "3.0.2"
 info:
   title: Tasks appliaction
   version: "0.0.1-SNAPSHOT"
+  description: Simple CRUD application for keeping track of tasks
 servers:
   - url: http://localhost:8080
+    description: Local server
 
+tags:
+  - name: tasks
+    description: Operations with tasks
 
 paths:
   /tasks:
     get:
       description: Get all tasks
+      tags:
+        - tasks
+      operationId: getTasks
       responses:
         "200":
           description: Array of tasks
@@ -19,9 +27,11 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/TaskRetrieve"
-
     post:
       description: Create a new task
+      tags:
+        - tasks
+      operationId: createTask
       requestBody:
         required: true
         content:
@@ -41,6 +51,9 @@ paths:
       - $ref: "#/components/parameters/id"
     get:
       description: Get a task
+      tags:
+        - tasks
+      operationId: getTask
       responses:
         "200":
           description: Task instance
@@ -50,6 +63,9 @@ paths:
                 $ref: "#/components/schemas/TaskRetrieve"
     put:
       description: Update a task
+      tags:
+        - tasks
+      operationId: updateTask
       responses:
         "200":
           description: Updated task
@@ -59,10 +75,12 @@ paths:
                 $ref: "#/components/schemas/TaskRetrieve"
     delete:
       description: Delete a task
+      tags:
+        - tasks
+      operationId: deleteTask
       responses:
-        "200":
+        "204":
           description: Deleted
-
 
 components:
   parameters:
@@ -71,14 +89,17 @@ components:
       in: path
       required: true
       schema:
-        type: integer
+        $ref: "#/components/schemas/UUID"
 
   schemas:
+    UUID:
+      type: string
+      format: uuid
     TaskRetrieve:
       type: object
       properties:
         id:
-          type: integer
+          $ref: "#/components/schemas/UUID"
         name:
           type: string
         done:
