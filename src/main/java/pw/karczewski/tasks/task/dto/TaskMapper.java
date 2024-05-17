@@ -13,7 +13,7 @@ import pw.karczewski.tasks.task.Task;
 @Mapper(unmappedTargetPolicy = ReportingPolicy.ERROR, componentModel = "spring", builder = @Builder(disableBuilder = true), nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS, nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface TaskMapper {
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "done", ignore = true, defaultValue = "false")
+    @Mapping(target = "done", constant = "false")
     Task toEntity(TaskCreate taskCreate);
 
     @Mapping(target = "id", ignore = true)
