@@ -1,0 +1,96 @@
+openapi: "3.0.2"
+info:
+  title: Tasks appliaction
+  version: "0.0.1-SNAPSHOT"
+servers:
+  - url: http://localhost:8080
+
+
+paths:
+  /tasks:
+    get:
+      description: Get all tasks
+      responses:
+        "200":
+          description: Array of tasks
+          content:
+            "application/json":
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/TaskRetrieve"
+
+    post:
+      description: Create a new task
+      requestBody:
+        required: true
+        content:
+          "application/json":
+            schema:
+              $ref: "#/components/schemas/TaskCreate"
+      responses:
+        "200":
+          description: Created task
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/TaskRetrieve"
+
+  /tasks/{id}:
+    parameters:
+      - $ref: "#/components/parameters/id"
+    get:
+      description: Get a task
+      responses:
+        "200":
+          description: Task instance
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/TaskRetrieve"
+    put:
+      description: Update a task
+      responses:
+        "200":
+          description: Updated task
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/TaskRetrieve"
+    delete:
+      description: Delete a task
+      responses:
+        "200":
+          description: Deleted
+
+
+components:
+  parameters:
+    id:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+
+  schemas:
+    TaskRetrieve:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        done:
+          type: boolean
+    TaskCreate:
+      type: object
+      properties:
+        name:
+          type: string
+    TaskUpdate:
+      properties:
+        name:
+          type: string
+        done:
+          type: boolean
