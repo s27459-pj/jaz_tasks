@@ -3,6 +3,7 @@ package pw.karczewski.tasks.task;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,7 +39,7 @@ public class TaskController implements TasksApi {
 
     @PostMapping
     public ResponseEntity<TaskRetrieve> createTask(@RequestBody TaskCreate data) {
-        return ResponseEntity.ok(taskService.create(data));
+        return ResponseEntity.status(HttpStatus.CREATED).body(taskService.create(data));
     }
 
     @PutMapping("/{id}")
