@@ -1,0 +1,108 @@
+openapi: "3.0.2"
+info:
+  title: Logging service
+  version: "0.0.1-SNAPSHOT"
+  description: Simple service for pushing logs
+servers:
+  - url: http://localhost:8081
+    description: Local server
+
+tags:
+  - name: logs
+    description: Operations with logs
+
+paths:
+  /logs:
+    post:
+      description: Create a new log entry
+      tags:
+        - logs
+      operationId: createLog
+      requestBody:
+        required: true
+        content:
+          "application/json":
+            schema:
+              $ref: "#/components/schemas/LogCreate"
+      responses:
+        "201":
+          description: Created log
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/LogRetrieve"
+        "400":
+          description: Invalid input
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/ValidationError"
+
+components:
+  schemas:
+    UUID:
+      type: string
+      format: uuid
+      example: 3d2370d4-b07a-47e3-9503-265be3925f7c
+    LogLevel:
+      type: string
+      enum:
+        - DEBUG
+        - INFO
+        - WARN
+        - ERROR
+        - CRITICAL
+      example: INFO
+    LogRetrieve:
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/UUID"
+        message:
+          type: string
+          example: "This is a log message"
+        level:
+          $ref: "#/components/schemas/LogLevel"
+        timestamp:
+          type: string
+          format: date-time
+          example: "2024-06-06T12:32:12Z"
+      required:
+        - id
+        - message
+        - level
+        - timestamp
+    LogCreate:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "This is a log message"
+        level:
+          $ref: "#/components/schemas/LogLevel"
+      required:
+        - message
+        - level
+    ValidationError:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Validation error
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                example: name
+              message:
+                type: string
+                example: must not be null
+            required:
+              - name
+              - message
+      required:
+        - message
+        - errors
