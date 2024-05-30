@@ -119,6 +119,7 @@ components:
     UUID:
       type: string
       format: uuid
+      example: 3d2370d4-b07a-47e3-9503-265be3925f7c
     TaskRetrieve:
       type: object
       properties:
@@ -127,32 +128,47 @@ components:
         name:
           type: string
           minLength: 3
+          example: Buy milk
         done:
           type: boolean
+          example: false
+      required:
+        - id
+        - name
+        - done
     TaskCreate:
       type: object
       properties:
         name:
           type: string
           minLength: 3
+          example: Water the plants
+      required:
+        - name
     TaskUpdate:
       type: object
       properties:
         name:
           type: string
           minLength: 3
+          example: Buy eggs
         done:
           type: boolean
+          example: true
     Error:
       type: object
       properties:
         message:
           type: string
+          example: Task not found
+      required:
+        - message
     ValidationError:
       type: object
       properties:
         message:
           type: string
+          example: Validation error
         errors:
           type: array
           items:
@@ -160,5 +176,13 @@ components:
             properties:
               name:
                 type: string
+                example: name
               message:
                 type: string
+                example: must not be null
+            required:
+              - name
+              - message
+      required:
+        - message
+        - errors
