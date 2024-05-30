@@ -12,6 +12,7 @@ import com.baeldung.openapi.model.TaskUpdate;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import pw.karczewski.tasks.exception.NotFoundException;
 
 @Service
 @RequiredArgsConstructor
@@ -26,7 +27,7 @@ public class TaskService {
     }
 
     public TaskRetrieve get(UUID id) {
-        var task = taskRepository.findById(id).orElseThrow();
+        var task = taskRepository.findById(id).orElseThrow(() -> new NotFoundException("Task not found"));
         return taskMapper.toRetrieve(task);
     }
 
@@ -37,7 +38,7 @@ public class TaskService {
 
     @Transactional
     public TaskRetrieve update(UUID id, TaskUpdate data) {
-        var task = taskRepository.findById(id).orElseThrow();
+        var task = taskRepository.findById(id).orElseThrow(() -> new NotFoundException("Task not found"));
         var updated = taskMapper.toUpdate(task, data);
         return taskMapper.toRetrieve(updated);
     }

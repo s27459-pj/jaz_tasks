@@ -45,6 +45,12 @@ paths:
             "application/json":
               schema:
                 $ref: "#/components/schemas/TaskRetrieve"
+        "400":
+          description: Invalid input
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/ValidationError"
 
   /tasks/{id}:
     parameters:
@@ -61,6 +67,12 @@ paths:
             "application/json":
               schema:
                 $ref: "#/components/schemas/TaskRetrieve"
+        "404":
+          description: Task not found
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/Error"
     put:
       description: Update a task
       tags:
@@ -73,6 +85,18 @@ paths:
             "application/json":
               schema:
                 $ref: "#/components/schemas/TaskRetrieve"
+        "400":
+          description: Invalid input
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/ValidationError"
+        "404":
+          description: Task not found
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/Error"
     delete:
       description: Delete a task
       tags:
@@ -102,6 +126,7 @@ components:
           $ref: "#/components/schemas/UUID"
         name:
           type: string
+          minLength: 3
         done:
           type: boolean
     TaskCreate:
@@ -109,9 +134,31 @@ components:
       properties:
         name:
           type: string
+          minLength: 3
     TaskUpdate:
+      type: object
       properties:
         name:
           type: string
+          minLength: 3
         done:
           type: boolean
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+    ValidationError:
+      type: object
+      properties:
+        message:
+          type: string
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              message:
+                type: string
