@@ -129,6 +129,9 @@ components:
           type: string
           minLength: 3
           example: Buy milk
+        category:
+          type: string
+          example: Shopping
         done:
           type: boolean
           example: false
@@ -143,6 +146,9 @@ components:
           type: string
           minLength: 3
           example: Water the plants
+        category:
+          type: string
+          example: Home
       required:
         - name
     TaskUpdate:
@@ -152,6 +158,9 @@ components:
           type: string
           minLength: 3
           example: Buy eggs
+        category:
+          type: string
+          example: School
         done:
           type: boolean
           example: true

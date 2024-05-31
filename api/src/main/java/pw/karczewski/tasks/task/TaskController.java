@@ -19,6 +19,7 @@ import com.baeldung.openapi.model.TaskCreate;
 import com.baeldung.openapi.model.TaskRetrieve;
 import com.baeldung.openapi.model.TaskUpdate;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController()
@@ -38,12 +39,12 @@ public class TaskController implements TasksApi {
     }
 
     @PostMapping
-    public ResponseEntity<TaskRetrieve> createTask(@RequestBody TaskCreate data) {
+    public ResponseEntity<TaskRetrieve> createTask(@Valid @RequestBody TaskCreate data) {
         return ResponseEntity.status(HttpStatus.CREATED).body(taskService.create(data));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<TaskRetrieve> updateTask(@PathVariable UUID id, @RequestBody TaskUpdate data) {
+    public ResponseEntity<TaskRetrieve> updateTask(@Valid @PathVariable UUID id, @RequestBody TaskUpdate data) {
         return ResponseEntity.ok(taskService.update(id, data));
     }
 
