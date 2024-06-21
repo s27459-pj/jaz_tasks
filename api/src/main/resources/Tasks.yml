@@ -195,3 +195,16 @@ components:
       required:
         - message
         - errors
+    Role:
+      type: string
+      enum:
+        - USER
+        - ADMIN
+    UserInfo:
+      type: object
+      properties:
+        email:
+          type: string
+          example: user@example.com
+        role:
+          $ref: "#/components/schemas/Role"
